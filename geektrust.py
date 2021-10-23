@@ -25,14 +25,15 @@ def getinput(input_file_name=None):
     with open(input_file_name, "r") as input_file:
         for _line in input_file.readlines():
             if _line.startswith(CURRENT_PORTFOLIO):
-                fund_names = split_command(CURRENT_PORTFOLIO, _line)
+                fund_names = _line.replace(
+                    CURRENT_PORTFOLIO, "").strip().split()
                 current_portfolio = create_portfolio(fund_names)
 
             elif _line.startswith(CALCULATE_OVERLAP):
-                fund_name = split_command(CALCULATE_OVERLAP, _line)
+                fund_name = _line.strip().split()[-1]
                 calculate_overlap(fund_name, current_portfolio)
 
-            elif _line.startswith(ADD_STOCK):
+            else:
                 fund_name, stock_name = split_command(ADD_STOCK, _line)
                 add_stock(fund_name, stock_name)
 

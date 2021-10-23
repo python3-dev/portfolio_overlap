@@ -96,7 +96,7 @@ def add_stock(fund_name, stock_name):
         fund.add_stock(stock)
 
 
-def split_command(command, line_):
+def split_command(line_):
     """
     Helper function to split command and input data.
 
@@ -105,20 +105,13 @@ def split_command(command, line_):
         line_ (str): Input line.
 
     Returns:
-        (*str): Fund names (for CURRENT_PORTFOLIO)
-        (str): Fund name (for CALCULATE_OVERLAP)
         fund_name, stock_name (str, str): Fund name and stock (for ADD_STOCK)
     """
-    if command == CURRENT_PORTFOLIO:
-        return line_.replace(command, "").strip().split()
-    elif command == CALCULATE_OVERLAP:
-        return line_.strip().split()[-1]
-    elif command == ADD_STOCK:
-        first_space = line_.find(" ")
-        second_space = line_.find(" ", first_space + 1)
-        fund_name = line_[first_space:second_space].strip()
-        stock_name = line_[second_space:].strip()
-        return (fund_name, stock_name)
+    first_space = line_.find(" ")
+    second_space = line_.find(" ", first_space + 1)
+    fund_name = line_[first_space:second_space].strip()
+    stock_name = line_[second_space:].strip()
+    return (fund_name, stock_name)
 
 
 MASTER_PORTFOLIO, MASTER_FUND = initialise()

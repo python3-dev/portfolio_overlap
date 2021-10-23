@@ -196,16 +196,8 @@ class Test(unittest.TestCase):
         add_stock(fund_1_name, "ACC LIMITED")
         self.assertTrue("ACC LIMITED" in fund_1.get_stock_names())
 
-    def test_split_command_1(self):
-        result = split_command(CURRENT_PORTFOLIO, "CURRENT_PORTFOLIO A B C")
-        self.assertEqual(len(result), 3)
-
-    def test_split_command_2(self):
-        result = split_command(CALCULATE_OVERLAP, "CALCULATE_OVERLAP A")
-        self.assertEqual(len(result), 1)
-
-    def test_split_command_3(self):
-        fund_name, stock_name = split_command(ADD_STOCK, "ADD_STOCK A B")
+    def test_split_command(self):
+        fund_name, stock_name = split_command("ADD_STOCK A B")
         self.assertTrue(type(fund_name), str)
         self.assertTrue(type(stock_name), str)
 
