@@ -124,13 +124,15 @@ class Fund:
 
     def overlap(self, other):
         """
-        Compute and return the overlap percentage rounded off to two significant digits.
+        Compute and return the overlap percentage rounded off to
+        two significant digits.
 
         Args:
             other (Fund): Fund instance to which overlap must be computed.
 
         Returns:
-            overlap_ (float): Overlap percentage rounded off to two significant digits.
+            overlap_ (float): Overlap percentage rounded off to
+            two significant digits.
         """
         total_stocks = len(self.get_stocks()) + len(other.get_stocks())
         common_stocks = len(

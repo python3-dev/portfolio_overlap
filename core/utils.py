@@ -1,5 +1,5 @@
 import json
-from models import Stock, Fund, Portfolio
+from core.models import Stock, Fund, Portfolio
 
 STOCK_DATA_LOCATION = "stock_data.json"
 CURRENT_PORTFOLIO = "CURRENT_PORTFOLIO"
@@ -15,7 +15,8 @@ def initialise():
     Returns:
         master_portfolio (Portfolio): Master portfolio instance of all
         mutual funds listed in stock_data.json
-        master_fund (Fund): Master fund instance of all stocks listed in stock_data.json
+        master_fund (Fund): Master fund instance of all stocks listed
+        in stock_data.json
     """
     with open(STOCK_DATA_LOCATION, "r") as file_data:
         stock_data = json.load(file_data)
@@ -58,8 +59,10 @@ def compute_overlap(fund_name, current_portfolio):
     Determine the overlap for the given fund with the current portfolio.
 
     Args:
-        fund_name (str): Name of the fund for which overlap should be determined.
-        current_portfolio (Portfolio): Current portfolio to which the fund must be compared.
+        fund_name (str): Name of the fund for which overlap
+        should be determined.
+        current_portfolio (Portfolio): Current portfolio to which
+        the fund must be compared.
 
     Returns:
         overlap (float): Percentage of overlap between two funds.

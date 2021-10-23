@@ -1,6 +1,6 @@
 import unittest
 
-from utils import (
+from core.utils import (
     initialise,
     create_portfolio,
     add_stock,
@@ -10,7 +10,7 @@ from utils import (
     CALCULATE_OVERLAP,
 )
 
-from models import Stock, Fund, Portfolio
+from core.models import Stock, Fund, Portfolio
 
 
 class Test(unittest.TestCase):
@@ -37,7 +37,10 @@ class Test(unittest.TestCase):
 
         self.app0 = initialise()
         self.app1 = create_portfolio(
-            ["ICICI_PRU_NIFTY_NEXT_50_INDEX", "PARAG_PARIKH_CONSERVATIVE_HYBRID"]
+            [
+                "ICICI_PRU_NIFTY_NEXT_50_INDEX",
+                "PARAG_PARIKH_CONSERVATIVE_HYBRID"
+            ]
         )
         return super().setUp()
 
