@@ -48,6 +48,7 @@ class Stock:
                 single_spacer(name)
             else:
                 return name.strip()
+            return(name)
 
         return single_spacer(_stock_name)
 

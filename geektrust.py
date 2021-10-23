@@ -5,8 +5,7 @@ from core.utils import (
     add_stock,
     split_command,
     CURRENT_PORTFOLIO,
-    CALCULATE_OVERLAP,
-    ADD_STOCK,
+    CALCULATE_OVERLAP
 )
 
 
@@ -34,9 +33,9 @@ def getinput(input_file_name=None):
                 calculate_overlap(fund_name, current_portfolio)
 
             else:
-                fund_name, stock_name = split_command(ADD_STOCK, _line)
+                fund_name, stock_name = split_command(_line)
                 add_stock(fund_name, stock_name)
 
 
 if __name__ == "__main__":
-    getinput()
+    getinput()  # pragma: no cover

@@ -5,9 +5,6 @@ from core.utils import (
     create_portfolio,
     add_stock,
     split_command,
-    CURRENT_PORTFOLIO,
-    ADD_STOCK,
-    CALCULATE_OVERLAP,
     MASTER_PORTFOLIO,
     MASTER_FUND
 )
@@ -27,6 +24,7 @@ class Test(unittest.TestCase):
         self.stock7 = Stock("Big Basket")
         self.stock8 = Stock("Wipro")
         self.stock9 = Stock("Intel")
+        self.stock10 = Stock("AMD  Inc")
 
         self.fund0 = Fund("ABC Mutual Fund")
         self.fund1 = Fund("DEF Mutual Fund")
@@ -85,6 +83,10 @@ class Test(unittest.TestCase):
     def test_get_stock_name_9(self):
         stock_name = self.stock9.get_stock_name()
         self.assertTrue(stock_name == "Intel")
+
+    def test_get_stock_name_10(self):
+        stock_name = self.stock10.get_stock_name()
+        self.assertEqual(stock_name, "AMD Inc")
 
     def test_get_fund_name_0(self):
         fund_name = self.fund0.get_fund_name()
@@ -180,7 +182,7 @@ class Test(unittest.TestCase):
         portfolio_2 = create_portfolio(["MIRAE_ASSET_EMERGING_BLUECHIP"])
         fund_1 = portfolio_1.get_fund_list()[0]
         fund_2 = portfolio_2.get_fund_list()[0]
-        self.assertAlmostEqual(fund_1.overlap(fund_2), 38.3)
+        self.assertAlmostEqual(fund_1.overlap(fund_2), 37.89)
 
     def test_add_stock_00(self):
         portfolio_1 = create_portfolio(["AXIS_BLUECHIP"])

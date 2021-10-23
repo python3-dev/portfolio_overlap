@@ -4,7 +4,6 @@ from core.models import Stock, Fund, Portfolio
 STOCK_DATA_LOCATION = "stock_data.json"
 CURRENT_PORTFOLIO = "CURRENT_PORTFOLIO"
 CALCULATE_OVERLAP = "CALCULATE_OVERLAP"
-ADD_STOCK = "ADD_STOCK"
 
 
 def initialise():
