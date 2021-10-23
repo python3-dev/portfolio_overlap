@@ -1,7 +1,9 @@
 import json
+from urllib.request import urlopen
 from core.models import Stock, Fund, Portfolio
 
 STOCK_DATA_LOCATION = "stock_data.json"
+# STOCK_DATA_URI = "https://geektrust.s3.ap-southeast-1.amazonaws.com/portfolio-overlap/stock_data.json"
 CURRENT_PORTFOLIO = "CURRENT_PORTFOLIO"
 CALCULATE_OVERLAP = "CALCULATE_OVERLAP"
 ADD_STOCK = "ADD_STOCK"
@@ -20,6 +22,9 @@ def initialise():
     """
     with open(STOCK_DATA_LOCATION, "r") as file_data:
         stock_data = json.load(file_data)
+
+    # response = urlopen(STOCK_DATA_URI)
+    # stock_data = json.loads(response.read())
 
     master_portfolio = Portfolio()
     master_fund = Fund("MASTER")
@@ -54,7 +59,7 @@ def create_portfolio(fund_names):
     return portfolio
 
 
-def compute_overlap(fund_name, current_portfolio):
+def calculate_overlap(fund_name, current_portfolio):
     """
     Determine the overlap for the given fund with the current portfolio.
 
@@ -67,17 +72,16 @@ def compute_overlap(fund_name, current_portfolio):
     Returns:
         overlap (float): Percentage of overlap between two funds.
     """
-    if not (fund_name in MASTER_PORTFOLIO.get_fund_names()):
+    fund = MASTER_PORTFOLIO.find_fund(fund_name)
+    if (fund is None):
         print("FUND_NOT_FOUND")
-
-    for fund in MASTER_PORTFOLIO.get_fund_list():
-        if fund.get_fund_name() == fund_name:
-            for current_fund in current_portfolio.get_fund_list():
-                overlap = current_fund.overlap(fund)
-                if overlap > 0:
-                    print(
-                        f"{fund.get_fund_name()} {current_fund.get_fund_name()} {overlap:.2f}%"
-                    )
+    else:
+        for current_fund in current_portfolio.get_fund_list():
+            overlap = current_fund.overlap(fund)
+            if overlap > 0:
+                print(
+                    f"{fund.get_fund_name()} {current_fund.get_fund_name()} {overlap:.2f}%"
+                )
 
 
 def add_stock(fund_name, stock_name):
@@ -88,16 +92,14 @@ def add_stock(fund_name, stock_name):
         fund_name (str): Name of the fund to which stock must be added.
         stock_name (str): Name of the stock to be added.
     """
-    for fund in MASTER_PORTFOLIO.get_fund_list():
-        if fund.get_fund_name() == fund_name:
-            if stock_name in MASTER_FUND.get_stock_names():
-                for stock in MASTER_FUND.get_stocks():
-                    if stock.get_stock_name() == stock_name:
-                        fund.add_stock(stock)
-            else:
-                new_stock = Stock(stock_name)
-                MASTER_FUND.add_stock(new_stock)
-                fund.add_stock(new_stock)
+    fund = MASTER_PORTFOLIO.find_fund(fund_name)
+    stock = MASTER_FUND.find_stock(stock_name)
+    if not(stock is None):
+        fund.add_stock(stock)
+    else:
+        new_stock = Stock(stock_name)
+        MASTER_FUND.add_stock(new_stock)
+        fund.add_stock(new_stock)
 
 
 def split_command(command, line_):

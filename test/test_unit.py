@@ -8,6 +8,8 @@ from core.utils import (
     CURRENT_PORTFOLIO,
     ADD_STOCK,
     CALCULATE_OVERLAP,
+    MASTER_PORTFOLIO,
+    MASTER_FUND
 )
 
 from core.models import Stock, Fund, Portfolio
@@ -178,14 +180,21 @@ class Test(unittest.TestCase):
         portfolio_2 = create_portfolio(["MIRAE_ASSET_EMERGING_BLUECHIP"])
         fund_1 = portfolio_1.get_fund_list()[0]
         fund_2 = portfolio_2.get_fund_list()[0]
-        self.assertAlmostEqual(fund_1.overlap(fund_2), 38.71)
+        self.assertAlmostEqual(fund_1.overlap(fund_2), 38.3)
 
-    def test_add_stock(self):
+    def test_add_stock_00(self):
         portfolio_1 = create_portfolio(["AXIS_BLUECHIP"])
         fund_1 = portfolio_1.get_fund_list()[0]
         fund_1_name = fund_1.get_fund_name()
         add_stock(fund_1_name, "TCS")
         self.assertTrue("TCS" in fund_1.get_stock_names())
+
+    def test_add_stock_01(self):
+        portfolio_1 = create_portfolio(["AXIS_BLUECHIP"])
+        fund_1 = portfolio_1.get_fund_list()[0]
+        fund_1_name = fund_1.get_fund_name()
+        add_stock(fund_1_name, "ACC LIMITED")
+        self.assertTrue("ACC LIMITED" in fund_1.get_stock_names())
 
     def test_split_command_1(self):
         result = split_command(CURRENT_PORTFOLIO, "CURRENT_PORTFOLIO A B C")
@@ -199,3 +208,19 @@ class Test(unittest.TestCase):
         fund_name, stock_name = split_command(ADD_STOCK, "ADD_STOCK A B")
         self.assertTrue(type(fund_name), str)
         self.assertTrue(type(stock_name), str)
+
+    def test_find_fund_0(self):
+        fund = MASTER_PORTFOLIO.find_fund("AXIS_BLUECHIP")
+        self.assertTrue(isinstance(fund, Fund))
+
+    def test_find_fund_1(self):
+        fund = MASTER_PORTFOLIO.find_fund("ABC")
+        self.assertTrue(fund is None)
+
+    def test_find_stock_0(self):
+        stock = MASTER_FUND.find_stock("INFOSYS LIMITED")
+        self.assertTrue(isinstance(stock, Stock))
+
+    def test_find_stock_1(self):
+        stock = MASTER_FUND.find_stock("ABCDEF123")
+        self.assertTrue(stock is None)

@@ -141,6 +141,23 @@ class Fund:
         overlap_ = round(2 * (common_stocks / total_stocks) * 100, 2)
         return overlap_
 
+    def find_stock(self, stock_name):
+        """
+        Find Stock instance from a Fund instance by stock name.
+
+        Args:
+            stock_name (str): Name of the stock to be retrieved.
+
+        Returns:
+            stock (Stock): Instance of stock if found else None.
+        """
+        if stock_name in self.get_stock_names():
+            for stock in self.get_stocks():
+                if stock.get_stock_name() == stock_name:
+                    return(stock)
+        else:
+            return(None)
+
 
 class Portfolio:
     """
@@ -182,3 +199,19 @@ class Portfolio:
         for fund in self.fund_list:
             fund_names.append(fund.get_fund_name())
         return fund_names
+
+    def find_fund(self, fund_name):
+        """
+        Find Fund instance from a Portfolio instance by fund name.
+
+        Args:
+            fund_name (str): Name of the fund to be retrieved.
+
+        Returns:
+            fund (Fund): Instance of fund if found else None.
+        """
+        if not (fund_name in self.get_fund_names()):
+            return(None)
+        for fund in self.get_fund_list():
+            if fund.get_fund_name() == fund_name:
+                return(fund)

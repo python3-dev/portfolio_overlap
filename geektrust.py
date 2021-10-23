@@ -1,7 +1,7 @@
 import sys
 from core.utils import (
     create_portfolio,
-    compute_overlap,
+    calculate_overlap,
     add_stock,
     split_command,
     CURRENT_PORTFOLIO,
@@ -30,7 +30,7 @@ def getinput(input_file_name=None):
 
             elif _line.startswith(CALCULATE_OVERLAP):
                 fund_name = split_command(CALCULATE_OVERLAP, _line)
-                compute_overlap(fund_name, current_portfolio)
+                calculate_overlap(fund_name, current_portfolio)
 
             elif _line.startswith(ADD_STOCK):
                 fund_name, stock_name = split_command(ADD_STOCK, _line)
@@ -38,4 +38,4 @@ def getinput(input_file_name=None):
 
 
 if __name__ == "__main__":
-    getinput()
+    getinput('input1.txt')
