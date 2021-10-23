@@ -1,6 +1,14 @@
 
 import sys
-from utils import create_portfolio, compute_overlap, add_stock
+from utils import (
+    create_portfolio,
+    compute_overlap,
+    add_stock,
+    split_command,
+    CURRENT_PORTFOLIO,
+    CALCULATE_OVERLAP,
+    ADD_STOCK
+)
 
 
 def getinput(input_file_name=None):
@@ -17,22 +25,18 @@ def getinput(input_file_name=None):
 
     with open(input_file_name, "r") as input_file:
         for _line in input_file.readlines():
-            if _line.startswith('CURRENT_PORTFOLIO'):
-                fund_names = _line.replace(
-                    'CURRENT_PORTFOLIO', '').strip().split()
+            if _line.startswith(CURRENT_PORTFOLIO):
+                fund_names = split_command(CURRENT_PORTFOLIO, _line)
                 current_portfolio = create_portfolio(fund_names)
-            elif _line.startswith('CALCULATE_OVERLAP'):
-                fund_name = _line.strip().split()[-1]
+
+            elif _line.startswith(CALCULATE_OVERLAP):
+                fund_name = split_command(CALCULATE_OVERLAP, _line)
                 compute_overlap(fund_name, current_portfolio)
-            elif _line.startswith('ADD_STOCK'):
-                fund_name, stock_name = _line.replace(
-                    'ADD_STOCK', '').strip().split()
+
+            elif _line.startswith(ADD_STOCK):
+                fund_name, stock_name = split_command(ADD_STOCK, _line)
                 add_stock(fund_name, stock_name)
 
 
-def main():
-    getinput()
-
-
 if __name__ == "__main__":
-    main()
+    getinput()
