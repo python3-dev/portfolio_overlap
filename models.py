@@ -59,3 +59,9 @@ class Portfolio():
 
     def get_fund_list(self):
         return(self.fund_list)
+
+    def get_fund_names(self):
+        fund_names = []
+        for fund in self.fund_list:
+            fund_names.append(fund.get_fund_name())
+        return(fund_names)

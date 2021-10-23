@@ -1,10 +1,12 @@
+
 import sys
+from utils import create_portfolio, compute_overlap, add_stock
 
 
-def readfile(input_file_name=None):
+def getinput(input_file_name=None):
     """
-    Reads inputs from argument or optionally input file (for testing) and
-    returns optimal orbit and vehicle data that minimises ride time.
+    Reads inputs from commandline argument or
+    optionally, from an input file (for testing).
 
     Args:
         input_file_name (str, optional): Optionally reads input file
@@ -14,10 +16,23 @@ def readfile(input_file_name=None):
         input_file_name = sys.argv[-1]
 
     with open(input_file_name, "r") as input_file:
-        input_list = input_file.readlines()[0].strip().split()
+        for _line in input_file.readlines():
+            if _line.startswith('CURRENT_PORTFOLIO'):
+                fund_names = _line.replace(
+                    'CURRENT_PORTFOLIO', '').strip().split()
+                current_portfolio = create_portfolio(fund_names)
+            elif _line.startswith('CALCULATE_OVERLAP'):
+                fund_name = _line.strip().split()[-1]
+                compute_overlap(fund_name, current_portfolio)
+            elif _line.startswith('ADD_STOCK'):
+                fund_name, stock_name = _line.replace(
+                    'ADD_STOCK', '').strip().split()
+                add_stock(fund_name, stock_name)
 
-    return(input_list)
+
+def main():
+    getinput()
 
 
 if __name__ == "__main__":
-    readfile('input1.txt')
+    main()
