@@ -1,4 +1,4 @@
-class Stock():
+class Stock:
     """
     Stock model
 
@@ -6,6 +6,7 @@ class Stock():
         stock_name (str): Name of the stock
 
     """
+
     counter = 0
 
     def __init__(self, stock_name):
@@ -31,6 +32,7 @@ class Stock():
         Returns:
             (str): Normalised stock name
         """
+
         def single_spacer(name):
             """
             Recursively removes double spaces from the name string
@@ -45,8 +47,9 @@ class Stock():
                 name = name.replace("  ", " ")
                 single_spacer(name)
             else:
-                return(name.strip())
-        return(single_spacer(_stock_name))
+                return name.strip()
+
+        return single_spacer(_stock_name)
 
     def get_stock_name(self):
         """
@@ -55,16 +58,17 @@ class Stock():
         Returns:
             (str): Name of the stock
         """
-        return(self.stock_name)
+        return self.stock_name
 
 
-class Fund():
+class Fund:
     """
     Fund model
 
     Attributes:
         fund_name (str): Name of the mutual fund
     """
+
     counter = 0
 
     def __init__(self, fund_name):
@@ -86,7 +90,7 @@ class Fund():
         Returns:
             (str): Name of the fund.
         """
-        return(self.fund_name)
+        return self.fund_name
 
     def add_stock(self, stock):
         """
@@ -107,7 +111,7 @@ class Fund():
         stocknames = []
         for stock in self.stock_list:
             stocknames.append(stock.stock_name)
-        return(stocknames)
+        return stocknames
 
     def get_stocks(self):
         """
@@ -116,7 +120,7 @@ class Fund():
         Returns:
             (list): List of stocks listed under a fund.
         """
-        return(self.stock_list)
+        return self.stock_list
 
     def overlap(self, other):
         """
@@ -129,15 +133,18 @@ class Fund():
             overlap_ (float): Overlap percentage rounded off to two significant digits.
         """
         total_stocks = len(self.get_stocks()) + len(other.get_stocks())
-        common_stocks = len(set(self.get_stock_names()).intersection(other.get_stock_names()))
-        overlap_ = round(2*(common_stocks/total_stocks)*100, 2)
-        return(overlap_)
+        common_stocks = len(
+            set(self.get_stock_names()).intersection(other.get_stock_names())
+        )
+        overlap_ = round(2 * (common_stocks / total_stocks) * 100, 2)
+        return overlap_
 
 
-class Portfolio():
+class Portfolio:
     """
     Portfolio model.
     """
+
     def __init__(self):
         """
         Initialises the Portfolio model.
@@ -160,7 +167,7 @@ class Portfolio():
         Returns:
             (list): List of fund instances of a given portfolio.
         """
-        return(self.fund_list)
+        return self.fund_list
 
     def get_fund_names(self):
         """
@@ -172,4 +179,4 @@ class Portfolio():
         fund_names = []
         for fund in self.fund_list:
             fund_names.append(fund.get_fund_name())
-        return(fund_names)
+        return fund_names

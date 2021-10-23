@@ -1,4 +1,3 @@
-
 import sys
 from utils import (
     create_portfolio,
@@ -7,7 +6,7 @@ from utils import (
     split_command,
     CURRENT_PORTFOLIO,
     CALCULATE_OVERLAP,
-    ADD_STOCK
+    ADD_STOCK,
 )
 
 
@@ -20,7 +19,7 @@ def getinput(input_file_name=None):
         input_file_name (str, optional): Optionally reads input file
         (used only for testing). Defaults to None.
     """
-    if not(input_file_name):
+    if not (input_file_name):
         input_file_name = sys.argv[-1]
 
     with open(input_file_name, "r") as input_file:
