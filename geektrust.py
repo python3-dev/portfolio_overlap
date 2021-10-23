@@ -38,4 +38,4 @@ def getinput(input_file_name=None):
 
 
 if __name__ == "__main__":
-    getinput('input1.txt')
+    getinput()
