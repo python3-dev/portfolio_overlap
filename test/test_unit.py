@@ -3,9 +3,11 @@ import unittest
 from utils import (
     initialise,
     create_portfolio,
-    compute_overlap,
     add_stock,
     split_command,
+    CURRENT_PORTFOLIO,
+    ADD_STOCK,
+    CALCULATE_OVERLAP,
 )
 
 from models import Stock, Fund, Portfolio
@@ -167,3 +169,30 @@ class Test(unittest.TestCase):
         self.assertTrue(
             len(self.app1.get_fund_list()) == len(self.app1.get_fund_names())
         )
+
+    def test_overlap(self):
+        portfolio_1 = create_portfolio(["AXIS_BLUECHIP"])
+        portfolio_2 = create_portfolio(["MIRAE_ASSET_EMERGING_BLUECHIP"])
+        fund_1 = portfolio_1.get_fund_list()[0]
+        fund_2 = portfolio_2.get_fund_list()[0]
+        self.assertAlmostEqual(fund_1.overlap(fund_2), 38.71)
+
+    def test_add_stock(self):
+        portfolio_1 = create_portfolio(["AXIS_BLUECHIP"])
+        fund_1 = portfolio_1.get_fund_list()[0]
+        fund_1_name = fund_1.get_fund_name()
+        add_stock(fund_1_name, "TCS")
+        self.assertTrue("TCS" in fund_1.get_stock_names())
+
+    def test_split_command_1(self):
+        result = split_command(CURRENT_PORTFOLIO, "CURRENT_PORTFOLIO A B C")
+        self.assertEqual(len(result), 3)
+
+    def test_split_command_2(self):
+        result = split_command(CALCULATE_OVERLAP, "CALCULATE_OVERLAP A")
+        self.assertEqual(len(result), 1)
+
+    def test_split_command_3(self):
+        fund_name, stock_name = split_command(ADD_STOCK, "ADD_STOCK A B")
+        self.assertTrue(type(fund_name), str)
+        self.assertTrue(type(stock_name), str)

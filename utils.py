@@ -60,6 +60,9 @@ def compute_overlap(fund_name, current_portfolio):
     Args:
         fund_name (str): Name of the fund for which overlap should be determined.
         current_portfolio (Portfolio): Current portfolio to which the fund must be compared.
+
+    Returns:
+        overlap (float): Percentage of overlap between two funds.
     """
     if not (fund_name in MASTER_PORTFOLIO.get_fund_names()):
         print("FUND_NOT_FOUND")
