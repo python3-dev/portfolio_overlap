@@ -1,5 +1,5 @@
 import json
-from core.models import Stock, Fund, Portfolio
+from core.models import Stock, Fund, Portfolio, ResultMatrix
 
 STOCK_DATA_LOCATION = "stock_data.json"
 CURRENT_PORTFOLIO = "CURRENT_PORTFOLIO"
@@ -52,28 +52,30 @@ def create_portfolio(fund_names):
     return portfolio
 
 
-def calculate_overlap(fund_name, current_portfolio):
+def compare(fund_name, current_portfolio):
     """
-    Determine the overlap for the given fund with the current portfolio.
+    Compares fund_name with each Fund instances in the current_portfolio.
 
     Args:
         fund_name (str): Name of the fund for which overlap
         should be determined.
-        current_portfolio (Portfolio): Current portfolio to which
-        the fund must be compared.
+        current_portfolio (Portfolio): Current Portfolio instance to which
+        the fund must be compared with.
 
     Returns:
-        overlap (float): Percentage of overlap between two funds.
+        (ResultMatrix): Result object with overlap measures.
     """
     fund = MASTER_PORTFOLIO.find_fund(fund_name)
     if (fund is None):
         print("FUND_NOT_FOUND")
-    else:
-        for current_fund in current_portfolio.get_fund_list():
-            overlap = current_fund.overlap(fund)
-            if overlap > 0:
-                print(
-                    f"{fund.get_fund_name()} {current_fund.get_fund_name()} {overlap:.2f}%"
+    return(ResultMatrix(current_portfolio, fund))
+
+
+def process_result(result_matrix):
+    for fund_name, overlap in result_matrix.fetch().items():
+        if overlap > 0:
+            print(
+                f"{result_matrix.get_other_fund_name()} {fund_name} {overlap:.2f}%"
                 )
 
 

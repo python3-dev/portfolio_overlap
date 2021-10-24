@@ -9,7 +9,7 @@ class Stock:
 
     counter = 0
 
-    def __init__(self, stock_name):
+    def __init__(self, stock_name) -> None:
         """
         Initialises Stock Model
 
@@ -72,12 +72,12 @@ class Fund:
 
     counter = 0
 
-    def __init__(self, fund_name):
+    def __init__(self, fund_name) -> None:
         """
         Initialises the Fund model
 
         Args:
-            fund_name (str): Name of the fund
+            fund_name (str): Name of the fund.
         """
         self.id = Fund.counter
         self.fund_name = fund_name
@@ -86,7 +86,7 @@ class Fund:
 
     def get_fund_name(self):
         """
-        Getter function for fund name.
+        Getter function for name of Fund instance.
 
         Returns:
             (str): Name of the fund.
@@ -95,19 +95,20 @@ class Fund:
 
     def add_stock(self, stock):
         """
-        Adding a stock to a fund.
+        Adding a Stock instance to a fund.
 
         Args:
-            stock (Stock): Adds a Stock instance to a fund.
+            stock (Stock): Stock instance to be added.
         """
         self.stock_list.append(stock)
 
     def get_stock_names(self):
         """
-        Getter function for stock names.
+        Getter function for names of Stock instances listed under
+        a Fund instance.
 
         Returns:
-            (list): List of stock names listed under a fund.
+            (list): List of stock names listed under a Fund instance.
         """
         stocknames = []
         for stock in self.stock_list:
@@ -116,10 +117,10 @@ class Fund:
 
     def get_stocks(self):
         """
-        Getter function for stocks.
+        Getter function for Stock instances listed under a Fund instance.
 
         Returns:
-            (list): List of stocks listed under a fund.
+            (list): List of Stock instances listed under a Fund instance.
         """
         return self.stock_list
 
@@ -165,7 +166,7 @@ class Portfolio:
     Portfolio model.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialises the Portfolio model.
         """
@@ -173,28 +174,29 @@ class Portfolio:
 
     def add_fund(self, fund):
         """
-        Add Fund instances to Portfolio model.
+        Add a Fund instance to Portfolio model.
 
         Args:
-            fund (Fund): Fund instances listed under a given portfolio.
+            fund (Fund): Fund instance to be added to a Portfolio instance.
         """
         self.fund_list.append(fund)
 
     def get_fund_list(self):
         """
-        Getter function for funds listed under a given portfolio.
+        Getter function for Fund instances listed under a Portfolio instance.
 
         Returns:
-            (list): List of fund instances of a given portfolio.
+            (list): List of Fund instances of a given Portfolio instance.
         """
         return self.fund_list
 
     def get_fund_names(self):
         """
-        Getter function for fund names listed under a given portfolio.
+        Getter function for names of Fund instances listed
+        under a Portfolio instance.
 
         Returns:
-            (list): List of fund names of a given portfolio.
+            (list): List of names of Fund instances of a Portfolio instance.
         """
         fund_names = []
         for fund in self.fund_list:
@@ -206,13 +208,36 @@ class Portfolio:
         Find Fund instance from a Portfolio instance by fund name.
 
         Args:
-            fund_name (str): Name of the fund to be retrieved.
+            fund_name (str): Name of the Fund instance to be retrieved.
 
         Returns:
-            fund (Fund): Instance of fund if found else None.
+            fund (Fund): Fund instance if found, else None.
         """
         if not (fund_name in self.get_fund_names()):
             return(None)
         for fund in self.get_fund_list():
             if fund.get_fund_name() == fund_name:
                 return(fund)
+
+
+class ResultMatrix():
+    def __init__(self, current_portfolio, other_fund) -> None:
+        self.other_fund = other_fund
+        self.current_portfolio = current_portfolio
+        self.overlap_matrix = {}
+        self.__store_overlap()
+
+    def __store_overlap(self):
+        if not(self.other_fund is None):
+            for current_fund in self.current_portfolio.get_fund_list():
+                self.overlap_matrix[
+                    current_fund.get_fund_name()
+                    ] = current_fund.overlap(
+                        self.other_fund
+                        )
+
+    def fetch(self):
+        return(self.overlap_matrix)
+
+    def get_other_fund_name(self):
+        return(self.other_fund.get_fund_name())

@@ -1,9 +1,10 @@
 import sys
 from core.utils import (
     create_portfolio,
-    calculate_overlap,
+    compare,
     add_stock,
     split_command,
+    process_result,
     CURRENT_PORTFOLIO,
     CALCULATE_OVERLAP
 )
@@ -30,7 +31,8 @@ def getinput(input_file_name=None):
 
             elif _line.startswith(CALCULATE_OVERLAP):
                 fund_name = _line.strip().split()[-1]
-                calculate_overlap(fund_name, current_portfolio)
+                result = compare(fund_name, current_portfolio)
+                process_result(result)
 
             else:
                 fund_name, stock_name = split_command(_line)

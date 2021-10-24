@@ -177,13 +177,6 @@ class Test(unittest.TestCase):
             len(self.app1.get_fund_list()) == len(self.app1.get_fund_names())
         )
 
-    def test_overlap(self):
-        portfolio_1 = create_portfolio(["AXIS_BLUECHIP"])
-        portfolio_2 = create_portfolio(["MIRAE_ASSET_EMERGING_BLUECHIP"])
-        fund_1 = portfolio_1.get_fund_list()[0]
-        fund_2 = portfolio_2.get_fund_list()[0]
-        self.assertAlmostEqual(fund_1.overlap(fund_2), 37.89)
-
     def test_add_stock_00(self):
         portfolio_1 = create_portfolio(["AXIS_BLUECHIP"])
         fund_1 = portfolio_1.get_fund_list()[0]
