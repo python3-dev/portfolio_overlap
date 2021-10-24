@@ -30,4 +30,3 @@ class test_integration(unittest.TestCase):
             expected_out = f.read()
         getinput('test/fixtures/input3.txt')
         self.assertEqual(mock_stdout.getvalue(), expected_out)
-

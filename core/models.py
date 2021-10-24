@@ -221,13 +221,31 @@ class Portfolio:
 
 
 class ResultMatrix():
+    """
+    Result Matrix stores the overlap comparisons and other details
+    like the fund which is being compared and the portfolio with
+    which comparison is made.
+
+    Args:
+        current_portfolio (Portfolio): Portfolio instance to which
+        comparison is made.
+        other_fund (Fund): Fund instance which is being compared.
+    """
     def __init__(self, current_portfolio, other_fund) -> None:
+        """
+        Initialises the ResultMatrix model and generate the
+        overlap matrix which holds information of overlap of given
+        fund with each fund in the portfolio.
+        """
         self.other_fund = other_fund
         self.current_portfolio = current_portfolio
         self.overlap_matrix = {}
         self.__store_overlap()
 
     def __store_overlap(self):
+        """
+        Generates the overlap data.
+        """
         if not(self.other_fund is None):
             for current_fund in self.current_portfolio.get_fund_list():
                 self.overlap_matrix[
@@ -237,7 +255,22 @@ class ResultMatrix():
                         )
 
     def fetch(self):
+        """
+        Returns the overlap matrix.
+
+        Returns:
+            (dict): Matrix containing information on
+            fund names and corresponding overlap with
+            the given fund.
+        """
         return(self.overlap_matrix)
 
     def get_other_fund_name(self):
+        """
+        Returns the name of the fund instance to which
+        comparison is made.
+
+        Returns:
+            (str): Name of the fund instance.
+        """
         return(self.other_fund.get_fund_name())

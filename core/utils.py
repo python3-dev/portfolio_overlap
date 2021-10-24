@@ -54,7 +54,8 @@ def create_portfolio(fund_names):
 
 def compare(fund_name, current_portfolio):
     """
-    Compares fund_name with each Fund instances in the current_portfolio.
+    Compares the Fund instance corresponding fund_name with
+    each Fund instances in the current_portfolio.
 
     Args:
         fund_name (str): Name of the fund for which overlap
@@ -72,10 +73,19 @@ def compare(fund_name, current_portfolio):
 
 
 def process_result(result_matrix):
-    for fund_name, overlap in result_matrix.fetch().items():
+    """
+    Process the Result Matrix instance and output according to the
+    problem requirements.
+
+    Args:
+        result_matrix (ResultMatrix): Result matrix for a given case.
+    """
+    result_dict = result_matrix.fetch()
+    other_fund_name = result_matrix.get_other_fund_name()
+    for fund_name, overlap in result_dict.items():
         if overlap > 0:
             print(
-                f"{result_matrix.get_other_fund_name()} {fund_name} {overlap:.2f}%"
+                f"{other_fund_name} {fund_name} {overlap:.2f}%"
                 )
 
 
