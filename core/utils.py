@@ -81,9 +81,9 @@ def process_result(result_matrix):
         result_matrix (ResultMatrix): Result matrix for a given case.
     """
     result_dict = result_matrix.fetch()
-    other_fund_name = result_matrix.get_other_fund_name()
     for fund_name, overlap in result_dict.items():
         if overlap > 0:
+            other_fund_name = result_matrix.get_other_fund_name()
             print(
                 f"{other_fund_name} {fund_name} {overlap:.2f}%"
                 )
